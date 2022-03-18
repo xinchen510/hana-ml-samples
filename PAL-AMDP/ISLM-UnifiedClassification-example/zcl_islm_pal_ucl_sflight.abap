@@ -212,7 +212,8 @@ CLASS zcl_islm_pal_ucl_sflight IMPLEMENTATION.
         left outer join :gain_chart as t2 on t2.x = ( select max(t3.x) from :gain_chart as t3 where t3.x < t1.x and t3.TEST is not null) order by x;
 
     et_gen_info = select 'HEMI_Profitcurve' as key,
-                         '{ "Type": "detected", "Frequency" : "' || x || '", "Random" : "' || x || '", "Wizard": "' || wizard || '", "Estimation": "' || train || '", "Validation": "' || validation || '", "Test": "' || test || '"}' as value
+                         '{ "Type": "detected", "Frequency" : "' || round(x * 40, 0, round_down) / 40 || '", "Random" : "' || round(x * 40, 0, round_down) / 40
+                         || '", "Wizard": "' || wizard || '", "Estimation": "' || train || '", "Validation": "' || validation || '", "Test": "' || test || '"}' as value
                          from :gain_chart
     -- Provide metrics that are displayed in the general additional info section of a model version in the ISLM Intelligent Scenario Management app
     /* <<<<<< TODO: Starting point of adaptation */
